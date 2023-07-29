@@ -36,3 +36,120 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Code Journey
+
+- 2023/07/16 開啟 sanity ecommerce 專案
+    
+    只要在 sanity 開啟專案，並 `npm install sanity` sanity 就能自動根據 ``schemas 來建立 CMS 頁面，schemas 的寫法可以參考官網
+    
+    ```jsx
+    import {defineField} from 'sanity'
+    
+    const banner = {
+      name: 'banner',
+      title: 'Banner',
+      type: 'document',
+      fields: [
+        defineField({
+          name: 'image',
+          title: 'Image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+        }),
+        defineField({
+          name: 'buttonText',
+          title: 'ButtonText',
+          type: 'string',
+        }),
+        defineField({
+          name: 'product',
+          title: 'Product',
+          type: 'string',
+        }),
+        defineField({
+          name: 'desc',
+          title: 'Desc',
+          type: 'string',
+        }),
+        defineField({
+          name: 'smallText',
+          title: 'SmallText',
+          type: 'string',
+        }),
+        defineField({
+          name: 'midText',
+          title: 'MidText',
+          type: 'string',
+        }),
+        defineField({
+          name: 'largeText1',
+          title: 'LargeText1',
+          type: 'string',
+        }),
+        defineField({
+          name: 'largeText2',
+          title: 'LargeText2',
+          type: 'string',
+        }),
+        defineField({
+          name: 'discount',
+          title: 'Discount',
+          type: 'string',
+        }),
+        defineField({
+          name: 'saleTime',
+          title: 'SaleTime',
+          type: 'string',
+        }),
+      ],
+    }
+    
+    export default banner;
+    ```
+    
+- 2023/07/30 今天寫了 sanity hook
+    
+    用 sanity client 和 sanity img builder 就可以在前端直接獲取 sanity studio 的資料，
+    
+    ```jsx
+    import { createClient } from "@sanity/client";
+    import imageUrlBuilder from '@sanity/image-url'
+    
+    export const client = createClient({
+      projectId: 'myId', // id 要去 sanity 的專案看
+      dataset: 'production',
+      useCdn: true, // set to `false` to bypass the edge cache
+      apiVersion: '2023-05-03', // use current date (YYYY-MM-DD) to target the latest API version
+      // token: process.env.SANITY_SECRET_TOKEN // Only if you want to update content with the client
+      token: process.env.NEXT_PUBILC_SANITY_TOKEN
+    })
+    
+    const builder = imageUrlBuilder(client);
+    
+    export const urlFor = (source: any) =>{
+      return builder.image(source)
+    }
+    ```
+    
+    唯一要注意的是 img 因為是遠端獲取，必須在 next.config.js 中設定權限
+    
+    ```jsx
+    const nextConfig = {
+      reactStrictMode: true,
+      images: {
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: 'cdn.sanity.io',
+          },
+        ],
+      },
+    }
+    
+    module.exports = nextConfig
+    ```
+    
+    目前遇到的問題是，除了手動設定 type，有沒有辦法直接從 sanity studio schemas 直接獲取 type?
