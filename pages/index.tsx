@@ -1,10 +1,16 @@
+import { client } from "@/lib/client"
 import { Product, FooterBanner, HeroBanner } from "@/components"
 
-export default function Home() {
+type HomePropsType = {
+  products: any,
+  bannerData: any
+}
+
+export default function Home({ products, bannerData }: HomePropsType) {
   return (
 
     <>
-      <HeroBanner></HeroBanner>
+      <HeroBanner heroBanner={bannerData[0]}></HeroBanner>
 
       <div className="products-heading">
         <h2>Beset Selling Products</h2>
@@ -18,4 +24,16 @@ export default function Home() {
       <FooterBanner></FooterBanner>
     </>
   )
+}
+
+export const getServerSideProps = async () => {
+  const query = '*[_type == "product"]';
+  const products = await client.fetch(query);
+
+  const bannerQuery = '*[_type == "banner"]';
+  const bannerData = await client.fetch(bannerQuery);
+
+  return {
+    props: { products, bannerData }
+  }
 }
