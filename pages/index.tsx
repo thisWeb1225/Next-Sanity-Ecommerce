@@ -8,7 +8,6 @@ type HomePropsType = {
 
 export default function Home({ products, bannerData }: HomePropsType) {
   return (
-
     <>
       <HeroBanner heroBanner={bannerData[0]}></HeroBanner>
 
@@ -18,10 +17,10 @@ export default function Home({ products, bannerData }: HomePropsType) {
       </div>
 
       <div className="products-container">
-        {['Product 1', 'Product2'].map((product) => product)}
+        {products.map((product: any) => <Product key={product.id} product={product}/>)}
       </div>
 
-      <FooterBanner></FooterBanner>
+      <FooterBanner footerBanner={bannerData[0]}></FooterBanner>
     </>
   )
 }
