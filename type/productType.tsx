@@ -1,6 +1,13 @@
 export type ProductType = {
-  image: any, 
+  details: string,
+  image: any[], 
   name: string, 
-  slug: any,
   price: number
+  slug: {
+    current: string
+  },
+  _id: string,
+  quantity: number,
 }
+
+export type ProductsType = ProductType[]
