@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { urlFor } from "@/lib/client"
+import { useProductStateContext } from "@/context/ProductStateProvider"
 
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { TiDeleteOutline } from 'react-icons//ti'
@@ -11,6 +12,9 @@ type CartProductPropsType = {
 }
 
 const CartProduct = ({ product }: CartProductPropsType) => {
+
+  const { toggleCartItemQuantity, removeProduct } = useProductStateContext();
+
   return (
     <div className='product' key={product._id}>
       <Image
@@ -27,13 +31,13 @@ const CartProduct = ({ product }: CartProductPropsType) => {
         <div className="flex bottom">
           <div>
             <p className="quantity-desc">
-              <span className="minus">
+              <span className="minus" onClick={() => toggleCartItemQuantity(product._id, 'decreasment')}>
                 <AiOutlineMinus />
               </span>
               <span className="minus">
-                {0}
+                {product.quantity}
               </span>
-              <span className="plus">
+              <span className="plus" onClick={() => toggleCartItemQuantity(product._id, 'increasment')}>
                 <AiOutlinePlus />
               </span>
             </p>
@@ -42,6 +46,7 @@ const CartProduct = ({ product }: CartProductPropsType) => {
             type="button"
             className="remove-item"
             title="remove product"
+            onClick={() => removeProduct(product._id)}
           >
             <TiDeleteOutline />
           </button>

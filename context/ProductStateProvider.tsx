@@ -9,12 +9,16 @@ type ProductStateContextType = {
   increaseQty: () => void,
   decreaseQty: () => void,
   productAddToCart: (product: ProductType, quantity: number) => void,
+  toggleCartItemQuantity: (id: string, action: 'increasment' | 'decreasment') => void,
+  removeProduct: (id: string) => void,
 }
 const ProductStateContext = createContext<ProductStateContextType>({
   qty: 1,
   increaseQty: () => { },
   decreaseQty: () => { },
   productAddToCart: () => { },
+  toggleCartItemQuantity: () => { },
+  removeProduct: () => { },
 });
 
 type ProductStateProviderPropsType = {
@@ -22,14 +26,47 @@ type ProductStateProviderPropsType = {
 }
 export const ProductStateProvider = (({ children }: ProductStateProviderPropsType) => {
 
-  const { onAdd } = useCartStateContext()
+  const { onAdd, cartItems, setCartItems, setTotalPrice, setTotalQuantities } = useCartStateContext()
   const [qty, setQty] = useState(1);
+
 
   const productAddToCart = (product: ProductType, quantity: number) => {
     // onAdd is from CartStateContext for add the product to cart.
     onAdd(product, quantity)
     toast.success(`${quantity} ${product.name} added to the cart`)
   }
+
+  const removeProduct = (id: string) => {
+    const foundProduct = cartItems.find((item) => item._id === id)!;
+    const newCartItems = cartItems.filter((item) => item._id !== id);
+
+    setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity);
+    setTotalQuantities(prevTotalQuantities => prevTotalQuantities - foundProduct.quantity);
+    setCartItems(newCartItems);
+  }
+  
+  const toggleCartItemQuantity = (id: string, action: 'increasment' | 'decreasment') => {
+
+    const foundProduct = cartItems.find(item => item._id === id)!;
+    
+    if (action === 'increasment') {
+      const updatedCartItems = cartItems.map((item) => item._id === id ? { ...item, quantity: item.quantity + 1 } : item);
+      setCartItems(updatedCartItems)
+      setTotalPrice(prevTotalPrice => prevTotalPrice + foundProduct.price);
+      setTotalQuantities(prevTotalQuantities => prevTotalQuantities + 1);
+
+    } else if (action === 'decreasment') {
+      if (foundProduct.quantity > 1) {
+        const updatedCartItems = cartItems.map((item) => item._id === id ? { ...item, quantity: item.quantity - 1 } : item);
+        setCartItems(updatedCartItems);
+        setTotalPrice(prevTotalPrice => prevTotalPrice - foundProduct.price);
+        setTotalQuantities(prevTotalQuantities => prevTotalQuantities - 1)
+      } else {
+        removeProduct(id)
+      }
+    }
+  }
+
 
   const increaseQty = () => {
     setQty(prevQty => prevQty + 1)
@@ -49,6 +86,8 @@ export const ProductStateProvider = (({ children }: ProductStateProviderPropsTyp
         increaseQty,
         decreaseQty,
         productAddToCart,
+        toggleCartItemQuantity,
+        removeProduct,
       }}
     >
       {children}

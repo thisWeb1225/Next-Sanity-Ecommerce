@@ -5,16 +5,22 @@ type CartStateContextType = {
   showCart: boolean,
   setShowCart: React.Dispatch<SetStateAction<boolean>>
   cartItems: ProductType[],
+  setCartItems: React.Dispatch<SetStateAction<ProductType[]>>
   totalPrice: number,
+  setTotalPrice: React.Dispatch<SetStateAction<number>>,
   totalQuantities: number,
+  setTotalQuantities: React.Dispatch<SetStateAction<number>>,
   onAdd: (product: ProductType, quantity: number) => void,
 }
 const CartStateContext = createContext<CartStateContextType>({
   showCart: false,
   setShowCart: () => { },
   cartItems: [],
+  setCartItems: () => { },
   totalPrice: 0,
+  setTotalPrice: () => { },
   totalQuantities: 0,
+  setTotalQuantities: () => { },
   onAdd: () => { },
 });
 
@@ -58,8 +64,11 @@ export const CartStateProvider = (({ children }: CartStateProviderPropsType) => 
         showCart,
         setShowCart,
         cartItems,
+        setCartItems,
         totalPrice,
+        setTotalPrice,
         totalQuantities,
+        setTotalQuantities,
         onAdd,
       }}
     >
