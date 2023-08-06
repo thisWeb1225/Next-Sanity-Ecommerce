@@ -1,8 +1,10 @@
 import { client } from "@/lib/client"
 import { Product, FooterBanner, HeroBanner } from "@/components"
 
+import { ProductType } from "@/type/productType"
+
 type HomePropsType = {
-  products: any,
+  products: ProductType[],
   bannerData: any
 }
 
@@ -17,7 +19,7 @@ export default function Home({ products, bannerData }: HomePropsType) {
       </div>
 
       <div className="products-container">
-        {products.map((product: any) => <Product key={product.id} product={product}/>)}
+        {products.map((product) => <Product key={product._id} product={product}/>)}
       </div>
 
       <FooterBanner footerBanner={bannerData[0]}></FooterBanner>
