@@ -29,7 +29,7 @@ const Success = () => {
             order@example.com
           </a>
         </p>
-        <Link href={'/'}>
+        <Link href='/'>
           <button type="button" className='btn'>Continue Shopping</button>
         </Link>
       </div>
