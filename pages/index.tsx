@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { client } from "@/lib/client"
-import { Product, FooterBanner, HeroBanner } from "@/components"
+import { Product, FooterBanner, Heading } from "@/components"
+import { HeroBanner } from "@/modules"
+import theme from "@/styles/theme"
 
 import { ProductType } from "@/type/productType"
 
@@ -16,7 +18,7 @@ export default function Home({ products, bannerData, footBannerData }: HomeProps
       <HeroBanner heroBanner={bannerData[0]}></HeroBanner>
 
       <div className="products-heading">
-        <h2>Beset Selling Products</h2>
+        <Heading as="h2" color={theme.colors.secondary1}>Beset Selling Products</Heading>
         <p>Speakers of many variations</p>
       </div>
 
