@@ -3,7 +3,6 @@ export { default as Layout } from './Layout';
 export { default as Navbar } from './Navbar';
 export { default as Product } from './Product';
 export { default as FooterBanner } from './FooterBanner';
-export { default as Cart } from './Cart';
 export { default as Heading } from './Heading';
 export { default as Title } from './Title';
 export { default as Button } from './Button';

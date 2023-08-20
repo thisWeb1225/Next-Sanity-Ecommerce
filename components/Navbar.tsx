@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { AiOutlineShopping } from 'react-icons/ai'
 
-import Cart from "./Cart";
+import { Cart } from "@/modules";
 import { useProductStateContext } from "@/context/ProductStateProvider";
 import { useCartStateContext } from "@/context/CartStateProvider";
 
