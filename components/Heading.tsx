@@ -1,31 +1,83 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
+import { theme, breakpoints } from '@/styles';
+import { BreakpointsType } from '@/styles/type';
 
-const StyledHeading = styled.h2<{ $size?: string, $color?: string, $weight?: number }>`
+const StyledHeading = styled.h2<{ $size?: string | BreakpointsType, $color?: string, $weight?: number }>`
 
-  font-size: ${props => props.$size || props.theme.fontSize.banner};
+  font-size: ${props => {
+    if (typeof props.$size === 'string') {
+      return props.$size;
+    } else {
+      return props.$size?.base
+    }
+  }};
     
-  color: ${props => props.$color || props.theme.colors.white};
+  color: ${props => props.$color || props.theme.colors.primary1};
 
-  font-weight: ${props => props.$weight|| 600};
+  font-weight: ${props => props.$weight || 600};
     
   text-transform: uppercase;
+
+  @media (width < ${breakpoints.sm}) {
+    font-size: ${props => {
+      if (typeof props.$size === 'string') {
+        return props.$size;
+      } else {
+        return props.$size?.sm
+      }
+    }};
+  }
+  @media (width < ${breakpoints.md}) {
+    font-size: ${props => {
+      if (typeof props.$size === 'string') {
+        return props.$size;
+      } else {
+        return props.$size?.md
+      }
+    }};
+  }
+  @media (width < ${breakpoints.lg}) {
+    font-size: ${props => {
+      if (typeof props.$size === 'string') {
+        return props.$size;
+      } else {
+        return props.$size?.lg
+      }
+    }};
+  }
+  @media (width < ${breakpoints.xl}) {
+    font-size: ${props => {
+      if (typeof props.$size === 'string') {
+        return props.$size;
+      } else {
+        return props.$size?.xl
+      }
+    }};
+  }
+  @media (width < ${breakpoints.xxl}) {
+    font-size: ${props => {
+      if (typeof props.$size === 'string') {
+        return props.$size;
+      } else {
+        return props.$size?.xxl
+      }
+    }};
+  }
 `
 
 const Heading = ({ as = 'h2', size = theme.fontSize.l, color = theme.colors.black, weight, children }: {
-  as?: 'bannerTitle' | 'h1' | 'h2' | 'h3' | 'h4',
-  size?: string,
+  as?: 'h1' | 'h2' | 'h3' | 'h4',
+  size?: string | BreakpointsType,
   color?: string,
   weight?: number,
   children: React.ReactNode
 }) => {
 
-  let acturalSize = as === 'bannerTitle' ? theme.fontSize.banner : size
-  let acturalColor = as === 'bannerTitle' ? theme.colors.white : color
-  const Component = as === 'bannerTitle' ? 'h2' : as;
+  const Component = as;
+
 
   return (
-    <StyledHeading as={Component} $size={acturalSize} $color={acturalColor} $weight={weight}>
+    <StyledHeading as={Component} $size={size} $color={color} $weight={weight}>
       {children}
     </StyledHeading>
   )
