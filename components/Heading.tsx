@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import { Styles } from 'styled-components/dist/types';
+import styled, {css, RuleSet} from 'styled-components';
 import { theme, breakpoints } from '@/styles';
 import { BreakpointsType } from '@/styles/type';
 
-const StyledHeading = styled.h2<{ $size?: string | BreakpointsType, $color?: string, $weight?: number }>`
+const StyledHeading = styled.h2<{ $size?: string | BreakpointsType, $color?: string, $weight?: number, $cssVal?:  RuleSet<object>}>`
 
   font-size: ${props => {
     if (typeof props.$size === 'string') {
@@ -18,66 +19,65 @@ const StyledHeading = styled.h2<{ $size?: string | BreakpointsType, $color?: str
     
   text-transform: uppercase;
 
+  ${props => props.$cssVal}
+
   @media (width < ${breakpoints.sm}) {
-    font-size: ${props => {
-      if (typeof props.$size === 'string') {
-        return props.$size;
-      } else {
-        return props.$size?.sm
-      }
-    }};
+    font-size: ${props => 
+      typeof props.$size === 'string' 
+        ? props.$size 
+        : props.$size?.sm
+    };
   }
   @media (width < ${breakpoints.md}) {
-    font-size: ${props => {
-      if (typeof props.$size === 'string') {
-        return props.$size;
-      } else {
-        return props.$size?.md
-      }
-    }};
+    font-size: ${props => 
+      typeof props.$size === 'string' 
+        ? props.$size 
+        : props.$size?.md
+    };
   }
   @media (width < ${breakpoints.lg}) {
-    font-size: ${props => {
-      if (typeof props.$size === 'string') {
-        return props.$size;
-      } else {
-        return props.$size?.lg
-      }
-    }};
+    font-size: ${props => 
+      typeof props.$size === 'string' 
+        ? props.$size 
+        : props.$size?.lg
+    };
   }
   @media (width < ${breakpoints.xl}) {
-    font-size: ${props => {
-      if (typeof props.$size === 'string') {
-        return props.$size;
-      } else {
-        return props.$size?.xl
-      }
-    }};
+    font-size: ${props =>  
+      typeof props.$size === 'string' 
+        ? props.$size 
+        : props.$size?.xl
+    };
   }
   @media (width < ${breakpoints.xxl}) {
-    font-size: ${props => {
-      if (typeof props.$size === 'string') {
-        return props.$size;
-      } else {
-        return props.$size?.xxl
-      }
-    }};
+    font-size: ${props =>
+      typeof props.$size === 'string' 
+        ? props.$size 
+        : props.$size?.xxl
+    };
   }
 `
 
-const Heading = ({ as = 'h2', size = theme.fontSize.l, color = theme.colors.black, weight, children }: {
+const Heading = ({ 
+  as: Component = 'h2', 
+  size = theme.fontSize.l, 
+  color = theme.colors.black, 
+  weight, 
+  sx,
+  children 
+}: {
   as?: 'h1' | 'h2' | 'h3' | 'h4',
   size?: string | BreakpointsType,
   color?: string,
   weight?: number,
+  sx?: Styles<object>,
   children: React.ReactNode
 }) => {
 
-  const Component = as;
-
+  const cssVal = sx && css(sx);
 
   return (
-    <StyledHeading as={Component} $size={size} $color={color} $weight={weight}>
+    <StyledHeading as={Component} $size={size} $color={color} $weight={weight} $cssVal={cssVal}>
       {children}
     </StyledHeading>
   )
