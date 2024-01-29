@@ -1,8 +1,14 @@
 # 🎧 Echo Aura ECommerce
 
-## Sanity Studio URL
+## 🌐 Sanity Studio URL
 [https://thisweb-next-sanity-ecommerce-demo.sanity.studio/](https://thisweb-next-sanity-ecommerce-demo.sanity.studio/)
 
+## 🔧 Tech
+1. Framework : Next.js page router + TypeScript
+2. UI : styled-components
+3. Animation : Framer motion
+4. Headless CMS : Sanity.js
+5. Third party payment : stripe
 
 ## ✏️ Note
 
@@ -207,3 +213,71 @@ sanity deploy
 他會要求選一個網域名稱，不要選到重複的即可。
 
 ### Stripe
+
+### Car Context
+
+用一個 Global Context 來控制購物車的內容，主要負責產品的種類，利用 Product context 負責每個商品的個別數量和價格，最後在統計總產品數量和價格。
+
+```tsx
+type CartStateContextType = {
+  showCart: boolean,
+  setShowCart: React.Dispatch<SetStateAction<boolean>>
+  cartItems: ProductsType,
+  setCartItems: React.Dispatch<SetStateAction<ProductsType>>
+  totalPrice: number,
+  setTotalPrice: React.Dispatch<SetStateAction<number>>,
+  totalQuantities: number,
+  setTotalQuantities: React.Dispatch<SetStateAction<number>>,
+  onAdd: (product: ProductType, quantity: number) => void,
+}
+const CartStateContext = createContext<CartStateContextType>({
+  showCart: false,
+  setShowCart: () => { },
+  cartItems: [],
+  setCartItems: () => { },
+  totalPrice: 0,
+  setTotalPrice: () => { },
+  totalQuantities: 0,
+  setTotalQuantities: () => { },
+  onAdd: () => { },
+});
+
+```
+
+基本邏輯很簡單，當執行 onAdd()，也就是新增產品時，先檢查 cartItems 裡有沒有商品，有的話就增加數量，沒有的話就添加商品進 cartItems。
+
+最後在計算總價格和總數量。
+
+在 Cart.tsx 組件使用這個 context 來控制購物車的行為，並在全局的組件，例如 Layout 裡的 Header、Navbar 來引入 Cart.tsx 組件。
+
+#### 未來優化
+如果未來有各種商品優惠的邏輯，全部加在 onAdd 裡會讓函數臃腫。
+
+可以利用表驅動法加策略模式，根據商品的種類來做不同的運算。
+
+或利用責任鏈模式，來針對不同的產品數量做不同的折扣。
+
+### Product context
+
+Product context 負責處理商品的數量，從 cart context 找到指定的商品，並處理數量變化。
+
+```tsx
+type ProductStateContextType = {
+  qty: number,
+  increaseQty: () => void,
+  decreaseQty: () => void,
+  productAddToCart: (product: ProductType, quantity: number) => void,
+  toggleCartItemQuantity: (id: string, action: 'increment' | 'decrement') => void,
+  removeProduct: (id: string) => void,
+}
+const ProductStateContext = createContext<ProductStateContextType>({
+  qty: 1,
+  increaseQty: () => { },
+  decreaseQty: () => { },
+  productAddToCart: () => { },
+  toggleCartItemQuantity: () => { },
+  removeProduct: () => { },
+});
+```
+
+可以看到整個 context 只著重在個別產品的數量。
