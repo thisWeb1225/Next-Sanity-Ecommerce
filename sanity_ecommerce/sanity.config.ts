@@ -1,7 +1,6 @@
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './schemas'
 import banner from './schemas/banner'
 import product from './schemas/product'
 import footer from './schemas/footer'
