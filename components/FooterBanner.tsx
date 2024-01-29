@@ -1,48 +1,75 @@
-import Link from "next/link"
-import Image from "next/image"
+// Components
+import Link from 'next/link';
+import Image from 'next/image';
+import Text from './Text';
+import RevealText from './RevealText';
+// Libs
+import { urlFor } from '@/lib/client';
+// Styles
+import styled from 'styled-components';
+import theme from '@/styles/theme';
+// Types
+import { FooterType } from '@/type';
 
-import { footerBannerType } from "@/type/footerBannerType"
-import { urlFor } from "@/lib/client"
+export const StyledSection = styled.section`
+  width: 100%;
+  min-height: 780px;
+  position: relative;
+`;
+
+export const StyledImgContainer = styled.div`
+  min-height: 120dvh;
+  position: relative;
+`;
+
+export const StyledImg = styled(Image)`
+  z-index: 0;
+`;
+
+export const StyledOverlay = styled.div`
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0) 0%,
+    transparent 80%,
+    transparent 100%
+  );
+`;
 
 type FooterBannerPropsType = {
-  footerBanner: footerBannerType
-}
+  footerBannerData: FooterType[0];
+};
 
-// {footerBanner} : FooterBannerPropsType
+const FooterBanner: React.FC<FooterBannerPropsType> = ({
+  footerBannerData,
+}) => {
+  const { title, image, desc } = footerBannerData;
 
-const FooterBanner = ({ footerBanner: { discount, largeText1, largeText2, saleTime, smallText, midText, product, buttonText, image, desc } }: FooterBannerPropsType) => {
-
-  const footerImgUrl = urlFor(image).width(555).url()
+  const bannerUrl = urlFor(image).width(1920).url();
 
   return (
-    <div className="footer-banner-container">
-      <div className="banner-desc">
-        <div className="left">
-          <p>{discount}</p>
-          <h3>{largeText1}</h3>
-          <h3>{largeText2}</h3>
-          <p>{saleTime}</p>
-        </div>
-        <div className="right">
-          <p>{smallText}</p>
-          <h3>{midText}</h3>
-          <p>{desc}</p>
-          <Link href={`/product/${product}`}>
-            <button type="button">{buttonText}</button>
-          </Link>
-        </div>
-      </div>
+    <StyledSection>
+      <StyledImgContainer>
+        <StyledImg src={bannerUrl} alt="Footer Banner" fill />
+        <StyledOverlay />
+      </StyledImgContainer>
+      <RevealText
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 2,
+        }}
+      >
+        <Text color={theme.colors.white} size={theme.fontSize.xxl}>
+          {title}
+        </Text>
+      </RevealText>
+    </StyledSection>
+  );
+};
 
-      <Image 
-        src={footerImgUrl}
-        className="footer-banner-image"
-        alt="footer banner"
-        width={555}
-        height={555}
-        priority={true}
-      />
-    </div>
-  )
-}
-
-export default FooterBanner
+export default FooterBanner;

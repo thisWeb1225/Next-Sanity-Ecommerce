@@ -3,7 +3,7 @@ import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import banner from './schemas/banner'
 import product from './schemas/product'
-import footBanner from './schemas/footBanner'
+import footer from './schemas/footer'
 
 export default defineConfig({
   name: 'default',
@@ -15,6 +15,6 @@ export default defineConfig({
   plugins: [deskTool(), visionTool()],
 
   schema: {
-    types: [banner, product, footBanner],
+    types: [banner, product, footer],
   },
 })

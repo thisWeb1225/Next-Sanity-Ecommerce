@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 
-import { ProductType } from "@/type/productType";
+import { ProductType } from "@/type";
 import { useCartStateContext } from "./CartStateProvider";
 
 type ProductStateContextType = {
@@ -9,7 +9,7 @@ type ProductStateContextType = {
   increaseQty: () => void,
   decreaseQty: () => void,
   productAddToCart: (product: ProductType, quantity: number) => void,
-  toggleCartItemQuantity: (id: string, action: 'increasment' | 'decreasment') => void,
+  toggleCartItemQuantity: (id: string, action: 'increment' | 'decrement') => void,
   removeProduct: (id: string) => void,
 }
 const ProductStateContext = createContext<ProductStateContextType>({
@@ -45,17 +45,17 @@ export const ProductStateProvider = (({ children }: ProductStateProviderPropsTyp
     setCartItems(newCartItems);
   }
   
-  const toggleCartItemQuantity = (id: string, action: 'increasment' | 'decreasment') => {
+  const toggleCartItemQuantity = (id: string, action: 'increment' | 'decrement') => {
 
     const foundProduct = cartItems.find(item => item._id === id)!;
     
-    if (action === 'increasment') {
+    if (action === 'increment') {
       const updatedCartItems = cartItems.map((item) => item._id === id ? { ...item, quantity: item.quantity + 1 } : item);
       setCartItems(updatedCartItems)
       setTotalPrice(prevTotalPrice => prevTotalPrice + foundProduct.price);
       setTotalQuantities(prevTotalQuantities => prevTotalQuantities + 1);
 
-    } else if (action === 'decreasment') {
+    } else if (action === 'decrement') {
       if (foundProduct.quantity > 1) {
         const updatedCartItems = cartItems.map((item) => item._id === id ? { ...item, quantity: item.quantity - 1 } : item);
         setCartItems(updatedCartItems);

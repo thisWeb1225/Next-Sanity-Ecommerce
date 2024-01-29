@@ -1,20 +1,17 @@
+// Components
+import ShopAllPage from "@/modules/ShopAllPage/ShopAllPage"
+// Libs
 import { client } from "@/lib/client"
-import { Product } from "@/components"
-
-import { ProductType } from "@/type/productType"
+// Types
+import { ProductsType } from "@/type"
 
 type ShopAllPropsType = {
-  products: ProductType[]
+  products: ProductsType
 }
 
-const ShopAll = ({ products }: ShopAllPropsType) => {
+const ShopAll: React.FC<ShopAllPropsType> = ({ products }) => {
   return (
-    <div className="shop-all">
-      <h1>SHOP ALL <span>{products.length}</span></h1>
-      <div className="all-products-container">
-        {products.map((product) => <Product key={product._id} product={product} />)}
-      </div>
-    </div>
+    <ShopAllPage products={products} />
   )
 }
 

@@ -5,22 +5,11 @@ body,
   margin: 0;
   box-sizing: border-box;
 }
-::-webkit-scrollbar {
-  width: 0px;
-}
+
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-.main-container {
-  max-width: 1400px;
-  margin: auto;
-  width: 100%;
-}
-.layout {
-  padding: 10px;
 }
 
 .navbar-container {
@@ -98,9 +87,9 @@ span.text-red {
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 64px;
   width: 100%;
+  margin-bottom: 64px;
 }
 
 .product-card {
@@ -108,13 +97,16 @@ span.text-red {
   transform: scale(1, 1);
   transition: transform 0.5s ease;
   color: #324d67;
+  
+  
 }
 .product-card:hover {
   transform: scale(1.1, 1.1);
 }
 .product-image {
+  padding: 24px;
+  background-color: #fafafa;
   border-radius: 15px;
-  background-color: #ebebeb;
   transform: scale(1, 1);
   transition: transform 0.5s ease;
 }
@@ -196,7 +188,7 @@ span.text-red {
 }
 .products-heading {
   text-align: center;
-  margin: 40px 0px;
+  margin: 156px 0px;
   color: #324d67;
 }
 .products-heading h2 {
@@ -262,24 +254,6 @@ span.text-red {
   font-size: 14px;
   font-weight: 300;
 }
-.cart-wrapper {
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 100;
-  /* will-change: transform; */
-  transition: all 1s ease-in-out;
-}
-.cart-container {
-  height: 100vh;
-  width: 600px;
-  background-color: white;
-  float: right;
-  padding: 40px 10px;
-  position: relative;
-}
 
 .footer-container {
   color: #324d67;
@@ -299,25 +273,8 @@ span.text-red {
   display: flex;
   gap: 10px;
 }
-.cart-heading {
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-  gap: 2px;
-  margin-left: 10px;
-  border: none;
-  background-color: transparent;
-}
 
-.cart-heading .heading {
-  margin-left: 10px;
-}
-.cart-num-items {
-  margin-left: 10px;
-  color: #f02d34;
-}
+
 .empty-cart {
   margin: 40px;
   text-align: center;
@@ -698,9 +655,6 @@ span.text-red {
   .cart-container {
     width: 415px;
     padding: 4px;
-  }
-  .cart-heading {
-    margin-top: 35px;
   }
   .product-container {
     margin-top: 10px;

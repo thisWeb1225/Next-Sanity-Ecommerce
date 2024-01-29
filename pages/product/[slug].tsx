@@ -1,14 +1,9 @@
-import Image from "next/image"
-import { useState } from 'react'
-
-import { useProductStateContext } from "@/context/ProductStateProvider"
-import { useCartStateContext } from "@/context/CartStateProvider"
-
-import { client, urlFor } from '@/lib/client'
-import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai'
-import { Product } from "@/components"
-
-import { ProductType } from "@/type/productType"
+// Components
+import ProductPage from "@/modules/ProductPage/ProductPage"
+// Libs
+import { client } from '@/lib/client'
+// Types
+import { ProductType } from "@/type"
 
 type ProductDetailsType = {
   product: ProductType,
@@ -16,102 +11,14 @@ type ProductDetailsType = {
 }
 
 const ProductDetails = ({ product, products }: ProductDetailsType) => {
-
-  const { image, name, details, price } = product;
-  const [index, setIndex] = useState(0);
-
-  const { increaseQty, decreaseQty, qty, productAddToCart } = useProductStateContext();
-  const { setShowCart } = useCartStateContext()
-
-  const handleBuyNow = () => {
-    productAddToCart(product, 1);
-    setShowCart(true);
-  }
-
   return (
-    <div>
-      <div className="product-detail-container">
-        <div>
-          <div className="image-container">
-            <Image
-              src={urlFor(image && image[index]).url()}
-              className="product-detail-image"
-              alt='product image'
-              width={400}
-              height={400} />
-          </div>
-          <div className="small-images-container">
-            {image?.map((item, i) => (
-              <Image
-                src={urlFor(item).url()}
-                alt="product image"
-                className={i === index ? 'small-image selected-image' : 'small-image'}
-                key={item._key}
-                width={100}
-                height={100}
-                onMouseEnter={() => setIndex(i)}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="product-detail-desc">
-          <h1>{name}</h1>
-          <div className="reviews">
-            <div>
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiOutlineStar />
-            </div>
-            <p>(20)</p>
-          </div>
-          <h4>Details: </h4>
-          <p>{details}</p>
-          <p className="price">${price}</p>
-          <div className="quantity">
-            <h3>Quantity:</h3>
-            <p className="quantity-desc">
-              <span className="minus" onClick={decreaseQty}>
-                <AiOutlineMinus />
-              </span>
-              <span className="minus">
-                {qty}
-              </span>
-              <span className="plus" onClick={increaseQty}>
-                <AiOutlinePlus />
-              </span>
-            </p>
-          </div>
-          <div className="buttons">
-            <button type="button" className="add-to-cart" onClick={() => productAddToCart(product, qty)}>
-              Add to Cart
-            </button>
-            <button type="button" className="buy-now" onClick={handleBuyNow}>
-              Buy Now
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <div className="maylike-products-wrapper">
-        <h2>You may also like</h2>
-        <div className="marquee">
-          <div className="maylike-products-container track">
-            {products.map((item) => (
-              <Product key={item._id} product={item}></Product>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <ProductPage product={product} products={products}/>
   )
 }
 
 export default ProductDetails
 
+// Fetching Data
 export const getStaticPaths = async () => {
   const query = `*[_type == "product"] {
     slug {
