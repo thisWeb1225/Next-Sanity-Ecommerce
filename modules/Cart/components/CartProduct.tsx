@@ -5,7 +5,9 @@ import { useProductStateContext } from "@/context/ProductStateProvider"
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { TiDeleteOutline } from 'react-icons//ti'
 
-import { ProductType } from "@/type/productType"
+import { ProductType } from "@/type"
+import { theme } from "@/styles"
+import { Text } from "@/components"
 
 type CartProductPropsType = {
   product: ProductType
@@ -25,19 +27,19 @@ const CartProduct = ({ product }: CartProductPropsType) => {
         className='cart-product-image' />
       <div className="item-desc">
         <div className="flex top">
-          <h5>{product.name}</h5>
-          <h4>${product.price}</h4>
+          <Text color={theme.colors.white} size={theme.fontSize.l} weight={700}>{product.name}</Text>
+          <Text color={theme.colors.white} size={theme.fontSize.m}>${product.price}</Text>
         </div>
         <div className="flex bottom">
           <div>
             <p className="quantity-desc">
-              <span className="minus" onClick={() => toggleCartItemQuantity(product._id, 'decreasment')}>
+              <span className="minus" onClick={() => toggleCartItemQuantity(product._id, 'decrement')}>
                 <AiOutlineMinus />
               </span>
               <span className="minus">
                 {product.quantity}
               </span>
-              <span className="plus" onClick={() => toggleCartItemQuantity(product._id, 'increasment')}>
+              <span className="plus" onClick={() => toggleCartItemQuantity(product._id, 'increment')}>
                 <AiOutlinePlus />
               </span>
             </p>

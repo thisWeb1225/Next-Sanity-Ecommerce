@@ -1,9 +1,9 @@
 import CartProduct from "./CartProduct"
 
-import { ProductType } from "@/type/productType"
+import { ProductsType } from "@/type"
 
 type CartProductListPropsType = {
-  cartItems: ProductType[]
+  cartItems: ProductsType
 }
 const CartProductList = ({ cartItems }: CartProductListPropsType) => {
   return (

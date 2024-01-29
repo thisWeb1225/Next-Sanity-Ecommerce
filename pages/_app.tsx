@@ -1,31 +1,36 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-import { Inter } from 'next/font/google'
+// Components
+import { Layout } from '@/components';
+import { Toaster } from 'react-hot-toast';
+import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 
-import { Layout } from '@/components'
-import { Toaster } from 'react-hot-toast'
+// Context
+import { ProductStateProvider } from '@/context/ProductStateProvider';
+import { CartStateProvider } from '@/context/CartStateProvider';
 
-import { ProductStateProvider } from '@/context/ProductStateProvider'
-import { CartStateProvider } from '@/context/CartStateProvider'
-
+// Styles
 import { ThemeProvider } from 'styled-components';
-import theme from '@/styles/theme'
+import theme from '@/styles/theme';
+import '@/styles/globals.css';
+import { Inter } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] })
+// Type
+import type { AppProps } from 'next/app';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <CartStateProvider>
-        <ProductStateProvider>
-          <Layout className={inter.className}>
-            <Toaster />
-            <Component {...pageProps} />
-          </Layout>
-        </ProductStateProvider>
-      </CartStateProvider>
-    </ThemeProvider>
-
-
-  )
+    <ReactLenis root>
+      <ThemeProvider theme={theme}>
+        <CartStateProvider>
+          <ProductStateProvider>
+            <Layout className={inter.className}>
+              <Toaster />
+              <Component {...pageProps} />
+            </Layout>
+          </ProductStateProvider>
+        </CartStateProvider>
+      </ThemeProvider>
+    </ReactLenis>
+  );
 }

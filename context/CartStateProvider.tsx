@@ -1,11 +1,10 @@
 import { createContext, useContext, useState, useEffect, SetStateAction } from "react";
-import { ProductType } from "@/type/productType";
-
+import { ProductsType, ProductType } from "@/type";
 type CartStateContextType = {
   showCart: boolean,
   setShowCart: React.Dispatch<SetStateAction<boolean>>
-  cartItems: ProductType[],
-  setCartItems: React.Dispatch<SetStateAction<ProductType[]>>
+  cartItems: ProductsType,
+  setCartItems: React.Dispatch<SetStateAction<ProductsType>>
   totalPrice: number,
   setTotalPrice: React.Dispatch<SetStateAction<number>>,
   totalQuantities: number,
@@ -29,7 +28,7 @@ type CartStateProviderPropsType = {
 }
 export const CartStateProvider = (({ children }: CartStateProviderPropsType) => {
   const [showCart, setShowCart] = useState(false);
-  const [cartItems, setCartItems] = useState<ProductType[]>([]);
+  const [cartItems, setCartItems] = useState<ProductsType>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantities, setTotalQuantities] = useState(0);
 

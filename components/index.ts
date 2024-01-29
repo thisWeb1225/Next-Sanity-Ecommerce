@@ -4,6 +4,5 @@ export { default as Navbar } from './Navbar';
 export { default as Product } from './Product';
 export { default as FooterBanner } from './FooterBanner';
 export { default as Heading } from './Heading';
-export { default as Title } from './Title';
 export { default as Button } from './Button';
 export { default as Text } from './Text';

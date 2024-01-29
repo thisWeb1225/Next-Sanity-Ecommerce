@@ -12,7 +12,7 @@ export const StyledText = styled.p<{ $size?: string | BreakpointsType, $color?: 
     : props.$size?.base
   };
       
-  color: ${props => props.$color || props.theme.colors.balck};
+  color: ${props => props.$color || props.theme.colors.black};
 
   font-weight: ${props => props.$weight || 500};
   
@@ -20,10 +20,10 @@ export const StyledText = styled.p<{ $size?: string | BreakpointsType, $color?: 
 
   @media (width < ${breakpoints.sm}) {
     font-size: ${props =>
-    typeof props.$size === 'string'
-    ? props.$size
-    : props.$size?.sm
-  };
+      typeof props.$size === 'string'
+      ? props.$size
+      : props.$size?.sm
+    };
   }
   @media (width < ${breakpoints.md}) {
     font-size: ${props =>

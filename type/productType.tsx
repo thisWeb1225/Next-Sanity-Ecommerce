@@ -1,20 +1,20 @@
-export type ProductType = {
-  details: string,
+type ProductType = {
+  details: string;
   image: {
-    _type: string,
-    _key: string,
+    _type: string;
+    _key: string;
     asset: {
-      _ref: string,
-      _type: string,
-    }
-  }[], 
-  name: string, 
-  price: number
+      _ref: string;
+      _type: string;
+    };
+  }[];
+  name: string;
+  price: number;
   slug: {
-    current: string
-  },
-  _id: string,
-  quantity: number,
-}
+    current: string;
+  };
+  _id: string;
+  quantity: number;
+};
 
-export type ProductsType = ProductType[]
+export default ProductType;

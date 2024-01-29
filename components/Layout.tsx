@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 export const StyledLayout = styled.div`
   width: 100%;
-  padding: 24px;
 `
 
 
@@ -24,7 +23,7 @@ const Layout = ({children, className} : LayoutPropsType) => {
       <header>
         <Navbar></Navbar>
       </header>
-      <main className="main-container">
+      <main>
         {children}
       </main>
       <footer>

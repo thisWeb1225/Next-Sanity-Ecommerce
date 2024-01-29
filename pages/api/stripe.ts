@@ -1,4 +1,4 @@
-import { ProductType } from '@/type/productType';
+import { ProductType } from '@/type';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
@@ -35,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         payment_method_types: ['card'],
         billing_address_collection: 'auto',
         success_url: `${req.headers.origin}/success`,
-        cancel_url: `${req.headers.origin}/canceled`,
+        cancel_url: `${req.headers.origin}`,
       });
 
       res.status(200).json(session)

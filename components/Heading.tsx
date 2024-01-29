@@ -69,7 +69,7 @@ const Heading = ({
   as?: 'h1' | 'h2' | 'h3' | 'h4',
   size?: string | BreakpointsType,
   color?: string,
-  weight?: number,
+  weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
   sx?: Styles<object>,
   children: React.ReactNode
 }) => {
