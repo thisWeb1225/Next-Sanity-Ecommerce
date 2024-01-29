@@ -1,64 +1,28 @@
-// Components
 import Link from 'next/link';
 import Image from 'next/image';
-import { Text } from '@/components';
-// Libs
+
 import { urlFor } from '@/lib/client';
-// Styles
-import styled from 'styled-components';
-import theme from '@/styles/theme';
-// Type
+
 import { ProductType } from '@/type';
-export const StyledProductItemContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-export const StyledProductItemContent = styled.div`
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: ${(props) => props.theme.gap.s};
-`;
-
-export const StyledImageContainer = styled.div`
-  position: relative;
-  aspect-ratio: 1 / 1;
-  width: 100%;
-  transform: scale(1);
-  transition: 0.4s ease-in-out;
-
-  :hover {
-    transform: scale(1.02);
-  }
-`;
-
-interface ProductItemProps {
-  product: ProductType;
+type ProductPropsType = {
+  product: ProductType
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({
-  product: { image, name, slug, price },
-}) => {
-  const productImgUrl = urlFor(image && image[0]).url();
+const Product = ({ product: { image, name, slug, price } }: ProductPropsType) => {
+
+  const productImgUrl = urlFor(image && image[0]).url()
 
   return (
-    <StyledProductItemContainer>
+    <>
       <Link href={`/product/${slug.current}`}>
-        <StyledProductItemContent>
-          <StyledImageContainer>
-            <Image src={productImgUrl} alt="product image" fill style={{background: `${theme.colors.gray1}`, borderRadius: '15px'}}></Image>
-          </StyledImageContainer>
-          <Text color={theme.colors.primary1} weight={600}>
-            {name}
-          </Text>
-          <Text color={theme.colors.primary1} weight={900}>
-            $ {price}
-          </Text>
-        </StyledProductItemContent>
+        <div className='product-card'>
+          <Image className='product-image' src={productImgUrl} alt="product image" width={250} height={250}></Image>
+          <p className='product-name'>{name}</p>
+          <p className='product-price'>${price}</p>
+        </div>
       </Link>
-    </StyledProductItemContainer>
-  );
-};
+    </>
+  )
+}
 
-export default ProductItem;
+export default Product
